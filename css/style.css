@@ -1,0 +1,152 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap');
+
+*{
+    box-sizing: border-box;
+ 
+}
+:root {
+    --fonte1:  'Roboto', sans-serif;
+
+  }
+  
+body{
+    font-family: var(--fonte1);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: pink;
+    width:100vw;
+}
+.site{
+    width: 1050px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.header{
+    height: 69px;
+    background: red;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    
+}
+.header h1{
+    width: 176px;
+    height: 43px;
+    left: 632px;
+    top: 13px;
+    text-align: center;
+    color:#FFFFFF;
+    font-weight: 700;
+    font-size:37px;
+}
+.titulo{
+    width: 100%;
+}
+.titulo p{
+    font-weight: bold;
+}
+.conteudo{
+    justify-content: center;
+}
+.Criar-quizz{
+    width: 1051px;
+    height: 181px;
+    left: 194px;
+    top: 146px;
+    border-radius: 5px;
+    margin-top: 77px;
+    margin-bottom:112px;
+    display: flex;
+    justify-content: center;
+}
+.caixa-superior{
+    width: 100%;
+    height: 100%;
+    border:3px dashed gray;
+    border-radius: 5px;
+    display: flex;
+    justify-content:center ;
+    flex-direction: column;
+    align-items: center;
+}
+button .botao-quizz{
+    border: 2px dashed #EC362D;
+    background-color: transparent;
+    color: #EC362D;
+    padding: 6px 14px;
+    border-radius:12px ;
+    margin-top: 20px;
+}
+p{
+    text-align: start;
+}
+.any-quizz{
+    text-align: center;
+}
+.quizz{
+    width: 340px;
+    height: 181px;
+    left: 194px;
+    top: 439px;
+    border-radius: 5px;
+    border: 1px solid crimson;
+}
+.footer{
+    display: flex;
+    flex-direction: line;
+    justify-content: space-between;
+    width: calc( (340px *3) + 30px );
+    margin-top: 5px;
+}
+.footer div div{
+    margin-bottom: 5px;
+}
+.conteudo-escondido{
+    display: none;
+}
+.seus-quizzes{
+    width: 100%;
+    height: 100%;
+    left: 194px;
+    top: 146px;
+    border-radius: 5px;
+    margin-top: 77px;
+    margin-bottom: 112px;
+    display: flex;
+    padding: 12px;
+    border: dashed black;
+}
+.botao-alternativo{
+    border-radius: 50%;
+    width: 31px;
+    height: 30px;
+    left: 333px;
+    top: 134px;
+    background: #EC362D;
+    color: white;
+    box-shadow: #FFFFFF;
+}
+.titulo-alternativo{
+    display: flex;
+    justify-content: start;
+  
+}
+.titulo-alternativo p{
+    font-weight: bold;
+    align-items: flex-start;
+}
+.primeira-div{
+    display: flex;
+    justify-content: start;
+    text-align: start;
+}
+.segunda-div{
+    display: flex;
+    flex-direction: block;
+    justify-content: start;
+}
