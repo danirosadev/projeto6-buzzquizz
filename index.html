@@ -6,27 +6,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/reset.css">
     <link rel="stylesheet" href="./css/style.css">
-    <title>Projetão BuzzQUizz</title>
+    <title>Projetão BuzzQuizz</title>
 </head>
 <body>
     <div class="site">
         <div class="header">
-        <h1>BuzzQuizz</h1> 
+            <h1>BuzzQuizz</h1> 
         </div>
-        <div class="conteudo-escondido">
+        <div class="tela-1">
             <div class="Criar-quizz">
                 <div class="caixa-superior">
                     <div class="any-quizz">Você não criou nenhum quizz ainda :(</div>
                     <br>
-                <button onclick="criarQuizz" class="botao-quizz">Criar quizz</button>
+                <button onclick="criarQuizz();" class="botao-quizz">Criar quizz</button>
                 </div>
             </div>
         </div>
-        <div class="seus-quizzes">
+        <div class="conteudo-escondido seus-quizzes ">
             <div class="titulo-alternativo">
                 <div class="primeira-div">
                     <p>Seus Quizzes</p>
-                    <button class="botao-alternativo">+</button>
+                    <button onclick="criarQuizz();" class="botao-alternativo">+</button>
                 </div>
                 <div class="segunda-div">
                     <div class="quizz"></div>
@@ -34,15 +34,19 @@
                 </div>
             </div>
         </div>
+        <div class="criacao-quizz-1"></div>
+        <div class="criacao-quizz-2"></div>
+        <div class="criacao-quizz-3"></div>
+        <div class="criacao-quizz-4"></div>
 
 
 
-        <div class="titulo">
+        <div class="titulo conteudo-escondido">
             <p>Todos os Quizzes</p>
         </div>
         
 
-        <div class="footer">
+        <div class="footer conteudo-escondido">
             <div class="coluna1">
                 <div class="quizz"></div>
                 <div class="quizz"></div>
@@ -75,8 +79,9 @@
 
 
 
-
-
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script src="script.js"></script>
+    
 </body>
 </html>
