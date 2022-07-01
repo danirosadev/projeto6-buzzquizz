@@ -1,5 +1,5 @@
 //Comunicação com o servidor
-
+/*
 const SERVIDOR = "https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes";
 const UNICO = "https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes/ID_DO_QUIZZ";
 const CRIAR = "https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes"
@@ -240,9 +240,18 @@ let a = document.querySelector('#a')
 let b = document.querySelector('#b')
 let c = document.querySelector('#c')
 let d = document.querySelector('#d')
+*/
+
+//Variáveis globais
+let title, image, questions, levels;
+let novoQuizz = [];
+let dadosCriacao = []; 
+let dadosSerializados;
+let regularExpression;
 
 function finalizarQuizz(){
 	alert('hora de finalizar')
+	//localStorage.getItem("dados", dadosSerializados);
 }
 
 function criarNiveis(){
@@ -281,27 +290,27 @@ function criarPerguntas(){
 	
 	<div class="pergunta-criada">
 			<h3>Pergunta 1</h3>
-			<input type="text" placeholder="Texto da pergunta"/>
+			<input class="input-pergunta1" type="text" placeholder="Texto da pergunta"/>
 			<input type="text" placeholder="Cor de fundo da pergunta"/>
 	</div>
 	<div class="resposta-correta">
 			<h3>Resposta correta</h3>
-			<input type="text" placeholder="Resposta correta"/>
+			<input class="input-correta" type="text" placeholder="Resposta correta"/>
 			<input type="text" placeholder="URL da imagem"/>
 	</div>
 	<div class="respostas-incorretas">
 		<h3>Respostas incorretas</h3>
 		 <div>
-			<input type="text" placeholder="Resposta incorreta 1"/>
-			<input type="text" placeholder="URL da imagem 1"/>
+			<input class="input-incorreta1" type="text" placeholder="Resposta incorreta 1"/>
+			<input type="url" placeholder="URL da imagem 1"/>
 		</div>
 		<div>
-			<input type="text" placeholder="Resposta incorreta 2"/>
-			<input type="text" placeholder="URL da imagem 2"/>
+			<input class="input-incorreta2" type="text" placeholder="Resposta incorreta 2"/>
+			<input type="url" placeholder="URL da imagem 2"/>
 		</div>
 		<div>
-			<input type="text" placeholder="Resposta incorreta 3"/>
-			<input type="text" placeholder="URL da imagem 3"/>
+			<input class="input-incorreta3" type="text" placeholder="Resposta incorreta 3"/>
+			<input type="url" placeholder="URL da imagem 3"/>
 		</div>      
 	</div>  
 </div>
@@ -311,58 +320,61 @@ function criarPerguntas(){
 		<ion-icon name="create-outline"></ion-icon>
 	</div>
 </div>
+<div class="form-2">
+	<div class="pergunta">
+		<h3>Pergunta 3</h3>
+		<ion-icon name="create-outline"></ion-icon>
+	</div>
+</div>
 <div>
 	<button class="botao-cria-quizz" type="button" onclick="criarNiveis();">Prosseguir para criar níveis</button>
 </div>`
 
 }
 
-
 function renderizaForm1(){
 	const form1 = document.querySelector('.criacao-quizz-1');
 	form1.innerHTML = `<div class="titulo">
 	<h2>Comece pelo começo</h2>
-</div>
-<div class="form">
-	<input class="input-titulo" type="text" placeholder="Título do seu quizz"/>
-	<input class="input-urlimg" type="text" placeholder="URL da imagem do seu quizz"/>
-	<input class="input-perguntas" type="text" placeholder="Quantidade de perguntas do quizz"/>
-	<input class="input-niveis" type="text" placeholder="Quantidade de níveis do quizz"/>
-</div>
-<div>
-	<button class="botao-cria-quizz" type="button" onclick="criarPerguntas();">Prosseguir para criar perguntas</button>
-</div>`
-	
-	let title = document.querySelector('.input-titulo').value;
-	let image = document.querySelector('.input-urlimg').value;
-	let questions = document.querySelector('.input-perguntas').value;
-	let levels = document.querySelector('input-niveis').value;
+	</div>
+	<div class="form">
+		<input class="input-titulo" type="text" minlength="20" maxlength="65" placeholder="Título do seu quizz"/>
+		<input class="input-urlimg" type="url" placeholder="URL da imagem do seu quizz"/>
+		<input class="input-perguntas" type="number" min="3" placeholder="Quantidade de perguntas do quizz"/>
+		<input class="input-niveis" type="number" min="2" placeholder="Quantidade de níveis do quizz"/>
+	</div>
+	<div>
+		<button class="botao-cria-quizz botao1" type="button" onclick="validaForm1();">Prosseguir para criar perguntas</button>
+	</div>`
+}
 
-	if(title.length < 20 && title.length > 65){
-		alert('Por favor, insira um título entre 20 e 65 caracteres!')
-	} else {
-		tituloQuizz = true;
+function isURL() {
+	regularExpression = /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/;
+  
+	return regularExpression.test();
+}
+
+function validaForm1 (){
+	title = document.querySelector('.input-titulo').value;
+	image = document.querySelector('.input-urlimg').value;
+	questions = document.querySelector('.input-perguntas').value;
+	levels = document.querySelector('.input-niveis').value;
+
+	novoQuizz = {
+		title: title,
+		image: image
 	}
 
-	if(questions.length < 3){
-		alert('Faça pelo menos 3 perguntas.')
-	} else {
-		questions.length = true;
-	}
+	let botao = document.querySelector('button');
+	botao.disabled = true;
 
-	if(levels.length < 2) {
-		alert('Seu quizz deve ter, no mínimo, 2 níveis.')
-	} else {
-		levels.length = true;
-	}
-
-	let botao = document.querySelector('.criacao-quizz-1 button');
-
-	/*if(title && image && questions.length && levels.length){
-		botao.disabled = false;
-	} else {
+	if(title.length < 20 || title.length > 65 || isURL(image) || questions < 3 || levels < 2){
 		botao.disabled = true;
-	}*/
+		alert('Por favor preencha os campos corretamente.');
+	} else {
+		botao.disabled = false;
+		criarPerguntas();	
+	}
 }
 
 function criarQuizz(){
