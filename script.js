@@ -77,6 +77,7 @@ axios.get(SERVIDOR  ,   [
 	}
 ])
 
+
 //Para buscar um único quizz, substituindo `ID_DO_QUIZZ` pelo id do quizz desejado.
 axios.get(UNICO, {
 	id: 1,
@@ -331,22 +332,6 @@ function criarPerguntas(){
 
 }
 
-function renderizaForm1(){
-	const form1 = document.querySelector('.criacao-quizz-1');
-	form1.innerHTML = `<div class="titulo">
-	<h2>Comece pelo começo</h2>
-	</div>
-	<div class="form">
-		<input class="input-titulo" type="text" minlength="20" maxlength="65" placeholder="Título do seu quizz"/>
-		<input class="input-urlimg" type="url" placeholder="URL da imagem do seu quizz"/>
-		<input class="input-perguntas" type="number" min="3" placeholder="Quantidade de perguntas do quizz"/>
-		<input class="input-niveis" type="number" min="2" placeholder="Quantidade de níveis do quizz"/>
-	</div>
-	<div>
-		<button class="botao-cria-quizz botao1" type="button" onclick="validaForm1();">Prosseguir para criar perguntas</button>
-	</div>`
-}
-
 function isURL() {
 	regularExpression = /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/;
   
@@ -354,15 +339,10 @@ function isURL() {
 }
 
 function validaForm1 (){
-	title = document.querySelector('.input-titulo').value;
-	image = document.querySelector('.input-urlimg').value;
-	questions = document.querySelector('.input-perguntas').value;
-	levels = document.querySelector('.input-niveis').value;
-
-	novoQuizz = {
-		title: title,
-		image: image
-	}
+	title = document.querySelector('#step-title').value;
+	image = document.querySelector('#step-img').value;
+	questions = document.querySelector('#step-count').value;
+	levels = document.querySelector('#step-level').value;
 
 	let botao = document.querySelector('button');
 	botao.disabled = true;
@@ -372,7 +352,7 @@ function validaForm1 (){
 		alert('Por favor preencha os campos corretamente.');
 	} else {
 		botao.disabled = false;
-		criarPerguntas();	
+		nextStep();
 	}
 }
 

@@ -88,8 +88,9 @@
             </div>
         </div> 
         <div id="tela3" ><!-- Criação de Quiz -->
-            <div class="title">Comece pelo começo</div>
+            
             <div data-stepid="0" class="step show">
+                <div class="title">Comece pelo começo</div>
                 <div class="box">
                     <input id="step-title" placeholder="Título do seu quizz" type="text">
                     <input id="step-img" placeholder="URL da imagem do seu quizz" type="text">
@@ -98,21 +99,24 @@
                 </div>
             </div>
             <div data-stepid="1" class="step ">
+                <div class="title">Crie suas perguntas</div>
 
             </div>
             <div data-stepid="2" class="step ">
+                <div class="title">Agora, decida os níveis</div>
               
             </div>
             
-            <button onclick="nextStep()">Proximo</button>
+            <button onclick="validaForm1(); ">Prosseguir para criar perguntas</button>
             <div id="finish"></div>
         </div> 
         <div id="tela4">
                 <p>Seu Quizz está pronto!</p>
                 <div class="retangulo-final"></div>
-                <button  class="botao-acessar-quizz">Acessar quizz</button>
-                <div class="voltar">Voltar pra home</div>
-        </div>
+                <button  class="botao-quizz">Acessar quizz</button>
+                <div class="voltar">Voltar para home</div>
+               
+            </div>
            
     </div>
 </body>
