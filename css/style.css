@@ -2,7 +2,6 @@
 body{
     padding: 0;
     margin: 0;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
 }
 *{
     box-sizing: border-box;
@@ -248,28 +247,64 @@ span{
     background-color: white;
     color: crimson;
 }
+
+
+.ionicon s-ion-icon{
+    width: 26px;
+    height: 23px;
+}
+/* Tela 4 */
 p{
     margin-top: 71px;
+    font-size: 23px;
+    font-weight: 700;
+    line-height: 27px;
+    letter-spacing: 0em;
+    text-align: left;
+    margin-bottom: 46px;
 }
 .voltar{
-    border: 1px solid black;
+    border: 1px solid white;
     margin-top: 10px;
+    height: 44px;
+    width: 219.63999938964844px;
+    font-size: 21px;
+    font-weight: 400;
+    letter-spacing: 0em;
+    text-align: center;
+    color: #818181;
 }
 .retangulo-final{
     border: 2px solid black;
     height: 266px;
-width: 500px;
-left: 470px;
-top: 213px;
-border-radius: 5px;
+    width: 500px;
+    left: 470px;
+    top: 213px;
+    border-radius: 5px;
 }
 #tela4{
     display: flex;
     flex-direction: column;
-  justify-content: center;
-  margin: auto;
+    justify-content: center;
+    margin: auto;
     align-items: center;
 }
 button{
     margin-top: 45px;
 }
+.botao-acessar-quizz{
+    color: white;
+    background: #EC362D;
+    height: 44px;
+    width: 220.32000732421875px;
+    left: 609px;
+    top: 524px;
+    border-radius: 15px;
+    font-family: Roboto;
+    font-size: 21px;
+    font-weight: 400;
+    line-height: 25px;
+    letter-spacing: 0em;
+    text-align: center;
+    }
+    
