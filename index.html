@@ -4,84 +4,120 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./css/reset.css">
     <link rel="stylesheet" href="./css/style.css">
     <title>Projetão BuzzQuizz</title>
 </head>
 <body>
-    <div class="site">
-        <div class="header">
-            <h1>BuzzQuizz</h1> 
-        </div>
-        <div class="tela-1">
-            <div class="Criar-quizz">
-                <div class="caixa-superior">
-                    <div class="any-quizz">Você não criou nenhum quizz ainda :(</div>
-                    <br>
-                <button onclick="criarQuizz();" class="botao-quizz">Criar quizz</button>
+    <div id="site">
+        <header><span onclick="toggleShow(1)">BuzzQuizz</span></header>
+        <div id="tela1" class="show"><!-- MENU -->
+            <div id="meusQuizes">
+                <div id="botao-meusQuizes" style="display:none"></div>
+                <div id="lista-meusQuizes">
+                    <div id="empty-meusQuizes">
+                        <div>Você não criou nenhum quiz ainda :(</div>
+                        <button onclick="toggleShow(3)">Criar Quizz</button>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="conteudo-escondido seus-quizzes ">
-            <div class="titulo-alternativo">
-                <div class="primeira-div">
-                    <p>Seus Quizzes</p>
-                    <button onclick="criarQuizz();" class="botao-alternativo">+</button>
+            <div id="todosOsQuizes">
+                <div class="title">Todos os Quiz</div>
+                <div id="quizList">
+                    <div class="quiz">
+                        <img src="https://i0.wp.com/www.jbox.com.br/wp/wp-content/uploads/2021/10/narutofeliz-destacada.jpg">
+                        <div>Naruto é o pior anime de todos?</div>
+                    </div>
+                    <div class="quiz">
+                        <img src="https://i0.wp.com/www.jbox.com.br/wp/wp-content/uploads/2021/10/narutofeliz-destacada.jpg">
+                        <div>Que figurante você seria em naruto</div>
+                    </div>
+                    <div class="quiz">
+                        <img src="https://i0.wp.com/www.jbox.com.br/wp/wp-content/uploads/2021/10/narutofeliz-destacada.jpg">
+                        <div class="minor">Decreto o fim de todos os animes shoonen, estamos em 2022 se liga oxe</div>
+                    </div>
+                    <div class="quiz">
+                        <img src="https://9tailedkitsune.com/wp-content/uploads/2019/11/demon-slayer-2.jpg">
+                        <div class="minor">Oi</div>
+                    </div>
                 </div>
-                <div class="segunda-div">
-                    <div class="quizz"></div>
-                    <div class="quizz"></div>
+            </div>
+        </div> 
+        <div id="tela2" ><!-- QUIZ -->
+            <div id="quizTemplate">Descubra qual felino você seria</div>
+            <div class="pergunta">
+                <div class="pergunta-titulo">Você dorme muito?</div>
+                <div class="options">
+                    <div class="op">
+                        <img src="https://i.pinimg.com/222x/b4/36/71/b43671c9421737c98459fcad562ef9c5.jpg">
+                        <span>Sim</span>
+                    </div>
+                    <div class="op">
+                        <img src="https://i.pinimg.com/222x/b4/36/71/b43671c9421737c98459fcad562ef9c5.jpg">
+                        <span>Claro</span>
+                    </div>
+                    <div class="op">
+                        <img src="https://i.pinimg.com/222x/b4/36/71/b43671c9421737c98459fcad562ef9c5.jpg">
+                        <span>Uhum</span>
+                    </div>
+                    <div class="op">
+                        <img src="https://i.pinimg.com/222x/b4/36/71/b43671c9421737c98459fcad562ef9c5.jpg">
+                        <span>Yes</span>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="criacao-quizz-1"></div>
-        <div class="criacao-quizz-2"></div>
-        <div class="criacao-quizz-3"></div>
-        <div class="criacao-quizz-4"></div>
-
-
-
-        <div class="titulo conteudo-escondido">
-            <p>Todos os Quizzes</p>
-        </div>
-        
-
-        <div class="footer conteudo-escondido">
-            <div class="coluna1">
-                <div class="quizz"></div>
-                <div class="quizz"></div>
+            <div class="pergunta">
+                <div class="pergunta-titulo">Você dorme muito?</div>
+                <div class="options">
+                    <div class="op">
+                        <img src="https://www.rbsdirect.com.br/imagesrc/35605331.jpg">
+                        <span>Sim</span>
+                    </div>
+                    <div class="op">
+                        <img src="https://www.rbsdirect.com.br/imagesrc/35605331.jpg">
+                        <span>Claro</span>
+                    </div>
+                    <div class="op">
+                        <img src="https://www.rbsdirect.com.br/imagesrc/35605331.jpg">
+                        <span>Uhum</span>
+                    </div>
+                    <div class="op">
+                        <img src="https://www.rbsdirect.com.br/imagesrc/35605331.jpg">
+                        <span>Yes</span>
+                    </div>
+                </div>
             </div>
-            <div class="coluna2">
-                <div class="quizz"></div>
-                <div class="quizz"></div>
+        </div> 
+        <div id="tela3" ><!-- Criação de Quiz -->
+            <div class="title">Comece pelo começo</div>
+            <div data-stepid="0" class="step show">
+                <div class="box">
+                    <input id="step-title" placeholder="Título do seu quizz" type="text">
+                    <input id="step-img" placeholder="URL da imagem do seu quizz" type="text">
+                    <input id="step-count" placeholder="Quantidade de perguntas do quizz" type="text">
+                    <input id="step-level" placeholder="Quantidade de níveis" type="text">
+                </div>
             </div>
-            <div class="coluna3">
-                <div class="quizz"></div>
-                <div class="quizz"></div>
+            <div data-stepid="1" class="step ">
+
+            </div>
+            <div data-stepid="2" class="step ">
+              
             </div>
             
-        </div>
+            <button onclick="nextStep()">Proximo</button>
+            <div id="finish"></div>
+        </div> 
+        <div id="tela4">
+                <p>Seu Quizz está pronto!</p>
+                <div class="retangulo-final"></div>
+                <button  class="botao-quizz">Acessar quizz</button>
+                <div class="voltar">Voltar para home</div>
+               
+            </div>
+           
     </div>
-
-
-    <!-- <div class="Questao">
-        <ul>
-            ALternativas
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-
-
-        </ul>
-    </div> -->
-
-
-
-
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-    <script src="script.js"></script>
-    
 </body>
 </html>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script src="script.js"></script>
