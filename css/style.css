@@ -8,13 +8,14 @@ body{
 }
 :root {
     --fonte1:  'Roboto', sans-serif;
-  }
+}
   
 #site {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    margin-top: 80px;
 }
 #site>div {
     display: none;
@@ -35,6 +36,7 @@ header{
     position: fixed;
     top: 0;
     left: 0;
+    z-index: 1;
 }
 header > span { cursor: pointer }
 span{
@@ -235,12 +237,13 @@ span{
         font-weight: bolder; 
     }
 
-#tela3 button {
+#tela3 button, .botao-quizz {
     background-color: #EC362D;
     color: white;
     border-radius: 8px;
     border: none;
-    margin: 64px 0;
+    margin-top: 64px;
+    margin-bottom: 20px;;
     padding: 16px 32px;
     font-size: 20px;
     cursor: pointer;

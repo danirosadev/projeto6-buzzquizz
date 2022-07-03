@@ -244,92 +244,10 @@ let d = document.querySelector('#d');
 
 //Variáveis globais
 let title, image, questions, levels;
-let novoQuizz = [];
-let dadosCriacao = []; 
-let dadosSerializados;
-let regularExpression;
 
 function finalizarQuizz(){
 	alert('hora de finalizar')
 	//localStorage.getItem("dados", dadosSerializados);
-}
-
-function criarNiveis(){
-	document.querySelector('.criacao-quizz-2').classList.add('conteudo-escondido');
-	const form3 = document.querySelector('.criacao-quizz-3');
-	form3.innerHTML = `<div class="titulo">
-	<h2>Agora, decida os níveis</h2>
-</div>
-<div class="form">
-	<div>
-		<h3>Nível 1</h3>
-		<input type="text" placeholder="Título do nível"/>
-		<input type="text" placeholder="% de acerto mínima"/>
-		<input type="text" placeholder="URL da imagem do nível"/>
-		<input type="text" placeholder="Descrição do nível"/>
-	</div>
-</div>
-<div class="form-2">
-	<div class="pergunta">
-		<h3>Nível 2</h3>
-		<ion-icon name="create-outline"></ion-icon>
-	</div>
-</div>
-<div>
-	<button class="botao-cria-quizz" type="button" onclick="finalizarQuizz();">Finalizar Quizz</button>
-</div>`
-}
-
-function criarPerguntas(){
-	document.querySelector('.criacao-quizz-1').classList.add('conteudo-escondido');
-	const form2 = document.querySelector('.criacao-quizz-2');
-	form2.innerHTML = `<div class="titulo">
-	<h2>Crie suas perguntas</h2>
-</div>
-<div class="form">
-	
-	<div class="pergunta-criada">
-			<h3>Pergunta 1</h3>
-			<input class="input-pergunta1" type="text" placeholder="Texto da pergunta"/>
-			<input type="text" placeholder="Cor de fundo da pergunta"/>
-	</div>
-	<div class="resposta-correta">
-			<h3>Resposta correta</h3>
-			<input class="input-correta" type="text" placeholder="Resposta correta"/>
-			<input type="text" placeholder="URL da imagem"/>
-	</div>
-	<div class="respostas-incorretas">
-		<h3>Respostas incorretas</h3>
-		 <div>
-			<input class="input-incorreta1" type="text" placeholder="Resposta incorreta 1"/>
-			<input type="url" placeholder="URL da imagem 1"/>
-		</div>
-		<div>
-			<input class="input-incorreta2" type="text" placeholder="Resposta incorreta 2"/>
-			<input type="url" placeholder="URL da imagem 2"/>
-		</div>
-		<div>
-			<input class="input-incorreta3" type="text" placeholder="Resposta incorreta 3"/>
-			<input type="url" placeholder="URL da imagem 3"/>
-		</div>      
-	</div>  
-</div>
-<div class="form-2">
-	<div class="pergunta">
-		<h3>Pergunta 2</h3>
-		<ion-icon name="create-outline"></ion-icon>
-	</div>
-</div>
-<div class="form-2">
-	<div class="pergunta">
-		<h3>Pergunta 3</h3>
-		<ion-icon name="create-outline"></ion-icon>
-	</div>
-</div>
-<div>
-	<button class="botao-cria-quizz" type="button" onclick="criarNiveis();">Prosseguir para criar níveis</button>
-</div>`
-
 }
 
 function isURL() {
@@ -343,7 +261,7 @@ function validaForm1 (){
 	image = document.querySelector('#step-img').value;
 	questions = document.querySelector('#step-count').value;
 	levels = document.querySelector('#step-level').value;
-
+	
 	let botao = document.querySelector('button');
 	botao.disabled = true;
 
@@ -356,10 +274,8 @@ function validaForm1 (){
 	}
 }
 
-function criarQuizz(){
-    // Se clicar no botão Criar Quizz : Aparece a conteúdo-escondido 
-	document.querySelector('.tela-1').classList.add('conteudo-escondido')
-	renderizaForm1();
+function validaForm2(){
+	alert('oi')
 }
 
 function verificarSeAcertou(){}
@@ -392,12 +308,12 @@ function reloadQuizzes(){
 }
 
 function sendQuizz(){
-    axios.post(QUIZZES, {
-        title: createQuizz.title,
-        image: createQuizz.image,
-        questions: createQuizz.questions,
-        levels: createQuizz.levels
-    })
+    axios.post(QUIZZES,  obj
+        // title: createQuizz.title,
+        // image: createQuizz.image,
+        // questions: createQuizz.questions,
+        // levels: createQuizz.levels
+    )
         .then( a => {
             reloadQuizzes();
         })
@@ -445,7 +361,8 @@ function nextStep(){
             createQuizz.image = document.querySelector('#step-img').value;
             createQuizz.qnt_perguntas = Number(document.querySelector('#step-count').value);
             createQuizz.qnt_nivel = Number(document.querySelector('#step-level').value);
-            
+            createQuizz.button = document.querySelector('.botao');
+
             ++createQuizz.step;
             document.querySelectorAll('.step').forEach( (a)=> {
                 if ( parseInt(a.dataset['stepid']) != createQuizz.step ){
@@ -468,7 +385,7 @@ function nextStep(){
                     else if( box.className == "box"){ box.className = "box expand" };
                 }
                 ion.name = "checkbox-outline";
-                
+				
                 let label = document.createElement('label')
                 label.textContent = "COR DA PERGUNTA";
                 let span1 = document.createElement('label')
@@ -538,6 +455,8 @@ function nextStep(){
                 box.appendChild(input_text[4]); 
                 box.appendChild(input_url[3])
                 document.querySelector(".step.show").appendChild(box);
+	            createQuizz.button.innerHTML = 'Prosseguir para cria níveis';
+				//createQuizz.button.setAtribute('onclick', 'validaForm2()');
             }
             break;
     
@@ -617,6 +536,8 @@ function nextStep(){
                 box.appendChild(input_url);
                 box.appendChild(input_textarea);
                 document.querySelector(".step.show").appendChild(box);
+				createQuizz.button.innerHTML = 'Finalizar Quizz';
+				//createQuizz.button.setAtribute('onclick', 'sendQuizz()');
             }
             break;
         
@@ -663,4 +584,5 @@ class Quizz{
         this.levels = [];
     }
 }
+
 reloadQuizzes()
