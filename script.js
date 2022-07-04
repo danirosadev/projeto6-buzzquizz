@@ -61,6 +61,7 @@ function reloadQuizzes(){
         .catch( a => console.log(a) )
     
 }
+
 function sendQuizz(){
     axios.post(QUIZZES, {
         title: createQuizz.title,
@@ -76,6 +77,7 @@ function sendQuizz(){
     })
     .catch( a => console.log(a) )
 }
+
 function toggleShow(tela){
     reloadQuizzes();
     switch (tela) {
@@ -108,6 +110,7 @@ function toggleShow(tela){
             break;
     }
 }
+
 function nextStep(){
     // coleta de dados.
     switch (createQuizz.step) {
@@ -116,7 +119,8 @@ function nextStep(){
             createQuizz.image = document.querySelector('#step-img').value;
             createQuizz.qnt_perguntas = Number(document.querySelector('#step-count').value);
             createQuizz.qnt_nivel = Number(document.querySelector('#step-level').value);
-            
+            createQuizz.button = document.querySelector('.botao');
+
             ++createQuizz.step;
             document.querySelectorAll('.step').forEach( (a)=> {
                 if ( parseInt(a.dataset['stepid']) != createQuizz.step ){
@@ -139,7 +143,7 @@ function nextStep(){
                     else if( box.className == "box"){ box.className = "box expand" };
                 }
                 ion.name = "checkbox-outline";
-                
+				
                 let label = document.createElement('label')
                 label.textContent = "COR DA PERGUNTA";
                 let span1 = document.createElement('label')
@@ -209,6 +213,8 @@ function nextStep(){
                 box.appendChild(input_text[4]); 
                 box.appendChild(input_url[3])
                 document.querySelector(".step.show").appendChild(box);
+	            createQuizz.button.innerHTML = 'Prosseguir para cria níveis';
+				//createQuizz.button.setAtribute('onclick', 'validaForm2()');
             }
             break;
     
@@ -289,6 +295,8 @@ function nextStep(){
                 box.appendChild(input_url);
                 box.appendChild(input_textarea);
                 document.querySelector(".step.show").appendChild(box);
+				createQuizz.button.innerHTML = 'Finalizar Quizz';
+				//createQuizz.button.setAtribute('onclick', 'sendQuizz()');
             }
             break;
         
@@ -465,4 +473,5 @@ class Quizz{
 		}];
     }
 }
+
 reloadQuizzes()

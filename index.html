@@ -36,21 +36,27 @@
             </div>
         </div> 
         <div id="tela3" ><!-- Criação de Quiz -->
-            <div class="title">Comece pelo começo</div>
+            
             <div data-stepid="0" class="step show">
+                <div class="title">Comece pelo começo</div>
                 <div class="box">
                     <input id="step-title" placeholder="Título do seu quizz" type="text" minlength="20" maxlength="65">
                     <input id="step-img" placeholder="URL da imagem do seu quizz" type="url">
                     <input id="step-count" placeholder="Quantidade de perguntas do quizz" min="3" type="number">
                     <input id="step-level" placeholder="Quantidade de níveis" min="0" type="number">
                 </div>
+                
             </div>
             <div data-stepid="1" class="step ">
+                <div class="title">Crie suas perguntas</div>
 
+                
             </div>
             <div data-stepid="2" class="step ">
+                <div class="title">Agora, decida os níveis</div>
               
             </div>
+            <button class="botao" onclick="validaForm1(); ">Prosseguir para criar perguntas</button>
             
             <button onclick="nextStep()">Próximo</button>
             <div id="finish"></div>
