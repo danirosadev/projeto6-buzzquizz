@@ -1,14 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap');
-body{
-    padding: 0;
-    margin: 0;
-}
-*{
-    box-sizing: border-box;
-}
 :root {
     --fonte1:  'Roboto', sans-serif;
   }
+body{
+    padding: 0;
+    margin: 0;
+    font-family: var(--fonte1)
+}
+*{
+    box-sizing: border-box;
+    font-family: var(--fonte1)
+}
   
 #site {
     display: flex;
@@ -27,17 +29,17 @@ header{
     height: 64px;
     width: 100%;
     color: white;
-    background-color: crimson;
+    background: #EC362D;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-bottom: 64px;
 }
 header > span { cursor: pointer }
 span{
     font-size: 40px;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-weight: bold;
 }
+#tela1, #tela3 { margin-top: 64px }
 #tela1, #tela2, #tela3{
     max-width: 1050px;
     width: 1050px;
@@ -47,21 +49,18 @@ span{
     flex-direction: column;
 }
 
-
-@media only screen and (max-width: 1100px){
-    .site{
-        max-width: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        padding: 69px 0px 0px 0px;
-    }
-}
 /* Tela 1  */
 #tela1 #meusQuizes { height: 256px; width: 100% }
 #tela1 #meusQuizes #botao-meusQuizes { height: 20% }
-#tela1 #meusQuizes #lista-meusQuizes{ height: 80%; width: 100% }
+#tela1 #meusQuizes #lista-meusQuizes{ 
+    height: 80%; 
+    width: 100%; 
+    overflow-x: scroll;
+    overflow-y: hidden;
+}
+#tela1 #meusQuizes #lista-meusQuizes::-webkit-scrollbar {
+    width: 0px;
+}
 #tela1 #meusQuizes #lista-meusQuizes #empty-meusQuizes{
     display: flex;
     justify-content: center;
@@ -71,17 +70,33 @@ span{
     border-radius: 16px;
     width: 100%;
     height: 100%;
+    text-align: center;
+    margin-bottom: 5px;
+    color: #B9B9B9;
+    font-weight: 400;
+}
+#tela1 #meusQuizes #lista-meusQuizes .quiz {
+    width: 350px;
+    height: 200px;
+    position: relative;
 }
 #tela1 #meusQuizes #lista-meusQuizes #empty-meusQuizes button{
     font-size: 24px;
     background-color: transparent;
     border-radius: 16px;
-    border: 2px dashed crimson;
-    color: crimson;
+    border: 2px dashed #EC362D;
+    color: #EC362D;
     transition: background-color border color 1s;
+    margin-top: 10px;
 }
-#tela1 #meusQuizes #lista-meusQuizes #empty-meusQuizes button:hover{ background-color: crimson; color: whitesmoke }
+#tela1 #meusQuizes #lista-meusQuizes #empty-meusQuizes button:hover{ background-color: #EC362D; color: whitesmoke }
 #tela1 #todosOsQuizes { width: 100% }
+#tela1 #todosOsQuizes .title{
+    font-weight: bold;
+    width: 158px;
+    height: 23px;
+    margin: 10px;
+}
 #tela1 #quizList {
     width: 100%;
     display: flex;
@@ -96,8 +111,8 @@ span{
     position: relative;
     margin-bottom: 5px;
 }
-#tela1 #quizList .quiz img { width: 100%; height: 100%; border-radius: 16px }
-#tela1 #quizList .quiz div {
+#tela1 #quizList .quiz img, #tela1 #lista-meusQuizes .quiz img { width: 100%; height: 100%; border-radius: 16px }
+#tela1 #quizList .quiz div, #tela1 #lista-meusQuizes .quiz div {
     position: absolute; 
     bottom: 0px; 
     width: 100%; 
@@ -107,7 +122,6 @@ span{
     border-radius: 16px;
     padding: 0 20px;
     font-size: 20px;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 #tela1 #quizList .quiz div.minor { font-size: 16px }
 
@@ -118,15 +132,22 @@ span{
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 128px; 
+    height: 256px; 
     width: 100vw;
-    background: url('https://super.abril.com.br/wp-content/uploads/2018/07/istock-617886480.jpg');
-    background-size: cover;
-    color: white;
-    font-size: 24px;
     margin-bottom: 64px;
+    position: relative;
 }
-#tela2 .pergunta{
+#tela2 #quizTemplate span{ z-index: 1; color: white; font-size: 24px }
+#tela2 #quizTemplate img{ 
+    filter: blur(8px) brightness(40%); 
+    width: 100%; 
+    height: 100%;
+    position: absolute; 
+}
+#tela2 #areaQuiz {
+    width: 1050px;
+}
+#tela2 #areaQuiz .pergunta{
     width: 100%;
     border: 1px solid black;
     padding: 16px;
@@ -136,7 +157,7 @@ span{
     align-items: center;
     flex-direction: column;
 }
-#tela2 .pergunta .pergunta-titulo{
+#tela2 #areaQuiz .pergunta .pergunta-titulo{
     display: flex;
     justify-content: center;
     align-items: center; 
@@ -147,7 +168,7 @@ span{
     color: white;
     background-color: dodgerblue;
 }
-#tela2 .pergunta .options{
+#tela2 #areaQuiz .pergunta .options{
     display: flex;
     flex-direction: row;
     align-content: flex-start;
@@ -155,20 +176,52 @@ span{
     justify-content: space-between;
     width: 90%;
 }
-#tela2 .pergunta .options .op{
-    color: white;
-    width: calc((100%/2) - 10px);
+#tela2 #areaQuiz .pergunta .options .op{
+    position: relative;
+    max-width: calc(50% - 10px);
+    width: calc(50% - 10px);
     height: 200px;
+    cursor: pointer;
+    transition: opacity .4s;
 }
-#tela2 .pergunta .options .op img{
+#tela2 #areaQuiz .pergunta .options .op img{
     width: 100%;
     height: 80%;
 }
-#tela2 .pergunta .options .op span{
+#tela2 #areaQuiz .pergunta .options .op span{
     width: 100%;
     height: 20%;
     font-size: 18px;
     color: black;
+}
+.box{
+    display: flex;
+    justify-content: space-between;
+    }
+    ion-icon{
+    width: 30px;
+    height: 30px;
+    }
+    
+    .ionicon s-ion-icon{
+    width: 26px;
+    height: 23px;
+    }
+    .icon-inner, .ionicon, svg{
+    width: 260px;
+    height: 230px;
+    }
+#btnTop{
+    position: fixed;
+    bottom: 20px;
+    right: 25px;
+    height: 60px;
+    width: 60px;
+    background: #ccc;
+    border: none;
+    border-radius: 100%;
+    display: none;
+    cursor: pointer;
 }
 
 /* Tela 3 */
@@ -202,7 +255,7 @@ span{
     #tela3 .step.show .box label { display: none }
 
 /* steps expandidos*/
-    #tela3 .step.show .box.expand input[type="text"] {
+    #tela3 .step.show .box.expand input[type="text"], #tela3 .step.show .box.expand input[type="number"] ,#tela3 .step.show .box.expand input[type="url"]  {
         display: block;
         margin: 16px;
         border-radius: 8px;
@@ -231,9 +284,15 @@ span{
         font-size: 24px;
         font-weight: bolder; 
     }
+    #tela3 .title{
+        height: 27px;
+        color:#000000;
+        font-size: 23px;
+        font-weight: bold;
+        }
 
 #tela3 button {
-    background-color: crimson;
+    background-color: #EC362D;
     color: white;
     border-radius: 8px;
     border: none;
@@ -247,64 +306,76 @@ span{
     background-color: white;
     color: crimson;
 }
-
-
-.ionicon s-ion-icon{
-    width: 26px;
-    height: 23px;
+/* Tela 4*/
+#tela4 .show{
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
-/* Tela 4 */
-p{
-    margin-top: 71px;
+#tela4 p{
     font-size: 23px;
     font-weight: 700;
     line-height: 27px;
     letter-spacing: 0em;
-    text-align: left;
-    margin-bottom: 46px;
-}
-.voltar{
-    border: 1px solid white;
-    margin-top: 10px;
-    height: 44px;
-    width: 219.63999938964844px;
-    font-size: 21px;
-    font-weight: 400;
-    letter-spacing: 0em;
     text-align: center;
-    color: #818181;
+    color: #000000;
+    }
+
+#tela4 button.botao-quizz{
+    height: 44px;
+    width: 221px;
+    border-radius: 15px;
+    color: white;
+    background:#EC362D;
+    font-size: 20px;
+    margin-top: 24px;
 }
-.retangulo-final{
-    border: 2px solid black;
-    height: 266px;
-    width: 500px;
-    left: 470px;
-    top: 213px;
-    border-radius: 5px;
-}
-#tela4{
-    display: flex;
+#site > .show{
     flex-direction: column;
-    justify-content: center;
-    margin: auto;
     align-items: center;
 }
-button{
-    margin-top: 45px;
-}
-.botao-acessar-quizz{
-    color: white;
-    background: #EC362D;
+.voltar{
     height: 44px;
-    width: 220.32000732421875px;
-    left: 609px;
-    top: 524px;
-    border-radius: 15px;
-    font-family: Roboto;
+    width: 219.63999938964844px;
+    left: 610px;
+    top: 577px;
+    color: #818181;
     font-size: 21px;
     font-weight: 400;
     line-height: 25px;
     letter-spacing: 0em;
     text-align: center;
+    margin-top: 10px;
+}
+#tela4 .retangulo-final{
+    height: 266px;
+    width: 500px;
+    left: 470px;
+    top: 213px;
+    border-radius: 5px;    
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.5) 65.62%, rgba(0, 0, 0, 0.8) 100%), url(image.png);
+}
+
+@media only screen and (max-width: 1100px){
+    .site{
+        max-width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 69px 0px 0px 0px;
     }
-    
+    #site{
+        width: 100%;
+        padding: 0px 15px 211px 15px;
+        }
+        #lista-meusQuizes, #meusQuizes{
+        height: 181px;
+        width: 340px;
+        left: 18px;
+        top: 100px;
+        border-radius: 5px;
+        
+        }
+        
+}

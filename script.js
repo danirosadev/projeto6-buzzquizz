@@ -1,30 +1,61 @@
-// //Comunicação com o servidor
-
-// const SERVIDOR = "https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes";
-// const UNICO = "https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes/ID_DO_QUIZZ";
-// const CRIAR = "https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes"
 const QUIZZES = "https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes";
+var currentQuiz = {
+    id: 0,
+    image: "",
+    levels: [],
+    questions: [],
+    title: "",
+    quizStatus: { feitos: 0, acertos: 0 }
+}
+const meusQuizes = [];
+if( window.localStorage['BuzzQuizz_id'] ){
+    meusQuizes.push(...JSON.parse(window.localStorage['BuzzQuizz_id']))
+}
 // Navegação Site
 // Sistema de navegação por classe SHOW CSS;
+// Função para randomizar array
+function shuffleArray(arr) {
+    // Loop em todos os elementos
+    for (let i = arr.length - 1; i > 0; i--) {
+            // Escolhendo elemento aleatório
+        const j = Math.floor(Math.random() * (i + 1));
+        // Reposicionando elemento
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    // Retornando array com aleatoriedade
+    return arr;
+}
 function reloadQuizzes(){
     document.querySelector('#quizList').innerHTML = "";
+    if(meusQuizes.length != 0){ document.querySelector('#lista-meusQuizes').innerHTML = "" }
+    function x(b){
+        let quiz = document.createElement('div');
+        let quizIMG = document.createElement('img');
+        let quizDIV = document.createElement('div');
+        quiz.className = "quiz"
+        quizIMG.src = b.image;
+        quizDIV.textContent = b.title;
+        quiz.onclick = ()=>{
+            axios.get( QUIZZES + "/" + b.id).then( c =>{
+                toggleShow(2);
+                
+                setQuizzGame(c.data);
+            })
+        }
+        quiz.appendChild(quizIMG);
+        quiz.appendChild(quizDIV);
+        return quiz;
+    }
+
+    meusQuizes.forEach( ind =>{
+        axios.get(QUIZZES + "/" + ind).then( b =>{
+            document.querySelector('#lista-meusQuizes').appendChild(x(b.data));
+        })
+    })
     axios.get(QUIZZES)
         .then( a => {
             a.data.forEach(b =>{
-                let quiz = document.createElement('div');
-                let quizIMG = document.createElement('img');
-                let quizDIV = document.createElement('div');
-                quiz.className = "quiz"
-                quizIMG.src = b.image;
-                quizDIV.textContent = b.title;
-                quiz.onclick = ()=>{
-                    axios.get( QUIZZES + "/" + b.id).then( c =>{
-                        console.log(c);
-                    })
-                }
-                quiz.appendChild(quizIMG);
-                quiz.appendChild(quizDIV);
-                document.querySelector('#quizList').appendChild(quiz)
+                document.querySelector('#quizList').appendChild(x(b));
             })
         })
         .catch( a => console.log(a) )
@@ -37,10 +68,13 @@ function sendQuizz(){
         questions: createQuizz.questions,
         levels: createQuizz.levels
     })
-        .then( a => {
-            reloadQuizzes();
-        })
-        .catch( a => console.log(a) )
+    .then( a => {
+        var ids = [a.data.id];
+        ids = [...ids, ...JSON.parse(window.localStorage['BuzzQuizz_id'])]
+        window.localStorage['BuzzQuizz_id'] = JSON.stringify(ids);
+        reloadQuizzes();
+    })
+    .catch( a => console.log(a) )
 }
 function toggleShow(tela){
     reloadQuizzes();
@@ -192,6 +226,7 @@ function nextStep(){
                 let respIMG4 = a.querySelector('[data-respostaimg4]').value;
                 let obj = {
                     title: respTitle,
+                    color: '#123456',
                     answers: [
                         {text: resp1, image: respIMG1, isCorrectAnswer: true},
                         {text: resp2, image: respIMG2, isCorrectAnswer: false},
@@ -282,8 +317,80 @@ function nextStep(){
         document.querySelector('[data-stepid="1"]').innerHTML = "";
         document.querySelector('[data-stepid="2"]').innerHTML = "";
         createQuizz.step = 0;
+        sendQuizz();
         break;
     }
+}
+function resetQuiz(){
+    currentQuiz.id = 0;
+    currentQuiz.image = "";
+    currentQuiz.levels = [];
+    currentQuiz.questions = [];
+    currentQuiz.title = "";
+}
+function setQuizzGame(data){
+    resetQuiz();
+    currentQuiz.id = data.id;
+    currentQuiz.image = data.image;
+    currentQuiz.levels = [...data.levels];
+    currentQuiz.questions = [...data.questions];
+    currentQuiz.title = data.title;
+
+    
+    document.querySelector('#quizTemplate span').textContent = data.title;
+    document.querySelector('#quizTemplate img').src = data.image;
+
+    
+    currentQuiz.questions.forEach( (q, y) =>{
+        let divs = []; 
+        divs[0] = document.createElement('div'); // class= pergunta
+        divs[1] = document.createElement('div'); // class= pergunta-titulo recebe color
+        divs[2] = document.createElement('div'); // class= options
+
+        divs[0].classList.add("pergunta");
+        divs[1].classList.add("pergunta-titulo");
+        divs[1].textContent = q.title;
+        divs[2].classList.add("options");
+        
+        divs[0].appendChild(divs[1]);
+        divs[0].appendChild(divs[2]);
+        let options = [];
+        q.answers.forEach( (ans, i) =>{
+            let ops = [];
+            ops[0] = document.createElement('div'); // class= op
+
+            ops[0].dataset['id'] = i;
+            ops[0].dataset['pid'] = y;
+            ops[0].classList.add('op');
+            ops[0].onclick = function(clk){
+                currentQuiz.quizStatus.feitos++;
+                if(ops[0].dataset['id'] == 0){
+                    currentQuiz.quizStatus.acertos++;
+                }
+                console.log(this)
+                document.querySelectorAll(`[data-pid="${y}"]`).forEach( perg =>{
+                    if ( perg.dataset.id != this.dataset.id ){ 
+                        perg.style.opacity = '0.2';
+                     }
+                })
+            }
+            ops[1] = document.createElement('img'); // img
+            ops[2] = document.createElement('span'); // span
+            
+            ops[1].src = ans.image;
+            ops[2].textContent = ans.text;
+            
+            ops[0].appendChild(ops[1]);
+            ops[0].appendChild(ops[2]);
+            options.push(ops[0]);
+        })
+        shuffleArray(options);
+        options.forEach(a =>{
+            divs[2].appendChild(a);
+        })
+        document.querySelector('#areaQuiz').appendChild(divs[0]);
+    })
+    
 }
 
 var createQuizz;
@@ -291,13 +398,71 @@ var createQuizz;
 class Quizz{
     constructor(){
         this.step = 0;
-        this.title = "";
-        this.image = "";
+        this.title = "Quanto você sabe sobre JOGOS?";
+        this.image = "https://thumbs2.imgbox.com/2d/46/Ba6012x0_t.jpg";
         this.qnt_perguntas = 0;
         this.qnt_nivel = 0;
-        
-        this.questions = [];
-        this.levels = [];
+
+        this.questions = [{
+			title: "Título da pergunta 1",
+			color: "#123456",
+			answers: [
+				{
+					text: "Texto da resposta 1",
+					image: "https://http.cat/411.jpg",
+					isCorrectAnswer: true
+				},
+				{
+					text: "Texto da resposta 2",
+					image: "https://http.cat/412.jpg",
+					isCorrectAnswer: false
+				}
+			]
+		},
+		{
+			title: "Título da pergunta 2",
+			color: "#123456",
+			answers: [
+				{
+					text: "Texto da resposta 1",
+					image: "https://http.cat/411.jpg",
+					isCorrectAnswer: true
+				},
+				{
+					text: "Texto da resposta 2",
+					image: "https://http.cat/412.jpg",
+					isCorrectAnswer: false
+				}
+			]
+		},
+		{
+			title: "Título da pergunta 3",
+			color: "#123456",
+			answers: [
+				{
+					text: "Texto da resposta 1",
+					image: "https://http.cat/411.jpg",
+					isCorrectAnswer: true
+				},
+				{
+					text: "Texto da resposta 2",
+					image: "https://http.cat/412.jpg",
+					isCorrectAnswer: false
+				}
+			]
+		}];
+        this.levels = [{
+			title: "Título do nível 1",
+			image: "https://http.cat/411.jpg",
+			text: "Descrição do nível 1",
+			minValue: 0
+		},
+		{
+			title: "Título do nível 2",
+			image: "https://http.cat/412.jpg",
+			text: "Descrição do nível 2",
+			minValue: 50
+		}];
     }
 }
 reloadQuizzes()
